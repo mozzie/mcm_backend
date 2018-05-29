@@ -1,11 +1,9 @@
 from server.mcm import mcm_api
-from flask import request
 
 
 class CardSearch():
 
-    def get(self):
-        search = request.args['search']
+    def get(self, search):
         url = "products/find"
         parameters = "?search=" + search
         return [{"id": c['idProduct'],
