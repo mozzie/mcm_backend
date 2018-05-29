@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from server.mcm.card_search import CardSearch
+from server.mcm import card_search
 from server.db import db
 
 
@@ -8,7 +8,7 @@ class Card(Resource):
 
     def get(self):
         search_word = request.args['search']
-        return CardSearch.get(search_word)
+        return card_search.get(search_word)
 
     def put(self):
         args = request.json
