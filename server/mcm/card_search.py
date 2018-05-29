@@ -2,7 +2,7 @@ from server.mcm import mcm_api
 
 
 
-def get(self, search):
+def get(search):
     url = "products/find"
     parameters = "?search=" + search
     return [{"id": c['idProduct'],
