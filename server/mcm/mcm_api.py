@@ -1,9 +1,10 @@
 from requests_oauthlib import OAuth1Session
 import json
 import ConfigParser
+import os
 
 configParser = ConfigParser.RawConfigParser()
-configFilePath = r'mcm_config.ini'
+configFilePath = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'mcm_config.ini')
 configParser.read(configFilePath)
 
 app_token = configParser.get('mcm', 'app_token')

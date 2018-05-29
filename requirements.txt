@@ -1,4 +1,6 @@
 flask
 flask_restful
 requests
+testresources
+ConfigParser
 requests_oauthlib
