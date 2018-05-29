@@ -4,7 +4,7 @@ import ConfigParser
 import os
 
 configParser = ConfigParser.RawConfigParser()
-configFilePath = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'mcm_config.ini')
+configFilePath = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini')
 configParser.read(configFilePath)
 
 app_token = configParser.get('mcm', 'app_token')
