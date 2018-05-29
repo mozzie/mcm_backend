@@ -1,7 +1,7 @@
 from server.mcm import mcm_api
 
 
-class CardSearch():
+class CardSearch:
 
     def get(self, search):
         url = "products/find"
