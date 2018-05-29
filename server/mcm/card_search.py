@@ -1,7 +1,6 @@
 from server.mcm import mcm_api
 
 
-
 def get(search):
     url = "products/find"
     parameters = "?search=" + search
