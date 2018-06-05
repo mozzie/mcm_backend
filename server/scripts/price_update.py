@@ -11,7 +11,7 @@ def main():
 def update_card(card_id, condition, amount):
     prices = Prices()
 
-    mcm_prices = prices.get(int(card_id, 10), condition=condition)
+    mcm_prices = prices.get(int(card_id), condition=condition)
     pricesum = 0.0
     itemsum = 0
     for p in mcm_prices[:5]:
