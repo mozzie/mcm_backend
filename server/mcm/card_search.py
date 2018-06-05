@@ -12,6 +12,7 @@ def get(search):
 def find_by_id(card_id):
     url = "products/"+str(card_id)
     c = mcm_api.request(url)['product']
+    print(c)
     return {"id": c['idProduct'],
             "name": c['enName'],
             "set": c['expansionName']}
