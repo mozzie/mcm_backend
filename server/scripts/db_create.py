@@ -3,8 +3,13 @@ from server.db.db import db_connect
 
 def main():
     c = db_connect().cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS cards(card_id TEXT PRIMARY KEY, amount INTEGER, current_price INTEGER)")
-    c.execute("CREATE TABLE IF NOT EXISTS prices(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+    c.execute("CREATE TABLE IF NOT EXISTS cards("
+              "card_id TEXT PRIMARY KEY, name TEXT,"
+              "amount INTEGER, "
+              "current_price INTEGER)")
+
+    c.execute("CREATE TABLE IF NOT EXISTS prices("
+              "id INTEGER PRIMARY KEY AUTOINCREMENT,"
               "card_id TEXT NOT NULL,"
               "price INTEGER NOT NULL,"
               "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,"
@@ -18,5 +23,5 @@ def delete():
 
 
 if __name__ == '__main__':
-    delete()
+  #  delete()
     main()
