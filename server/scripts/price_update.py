@@ -1,6 +1,6 @@
 from server.db import db
 from server.mcm.prices import Prices
-
+from server.mcm.card_search import find_by_id
 
 def main():
     for c in db.get_cards():
@@ -18,7 +18,8 @@ def update_card(card_id, condition, amount):
     for p in mcm_prices[:5]:
         pricesum += p['price']
         itemsum += p['count'] * 4 if p['isPlayset'] else 1
-        name = p['product']['enName'] + "("+str(p['product']['expansion'])+")"
+    p = find_by_id(int(card_id))
+    name = p['name'] + " (" + p['set'] + ")"
     new_price = int(100*pricesum/itemsum)
     db.update_card(card_id, amount, condition=condition, price=new_price, name=name)
     db.insert_price(card_id, condition, new_price)

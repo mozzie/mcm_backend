@@ -9,3 +9,9 @@ def get(search):
              "set": c['expansionName']} for c in mcm_api.request(url, parameters)['product']]
 
 
+def find_by_id(card_id):
+    url = "products/"+card_id
+    c = mcm_api.request(url)['product']
+    return {"id": c['idProduct'],
+            "name": c['enName'],
+            "set": c['expansionName']}
