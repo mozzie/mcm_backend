@@ -45,7 +45,7 @@ def delete_card(card_id):
 
 
 def get_card(card_id, condition):
-    cards = fetch("SELECT * FROM CARDS WHERE card_id = :card_id", {card_id: str(card_id) + "-" + condition})
+    cards = fetch("SELECT * FROM CARDS WHERE card_id = :card_id", {"card_id": str(card_id) + "-" + condition})
     if cards and len(cards)>0:
         return cards[0]
     else:
