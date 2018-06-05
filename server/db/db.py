@@ -1,6 +1,5 @@
 import sqlite3
 from os import path
-from server.scripts import price_update
 ROOT = path.dirname(path.realpath(__file__))
 
 
@@ -33,7 +32,6 @@ def get_cards():
 def insert_card(card_id, card_amount, condition="NM"):
     query("INSERT INTO cards(card_id, amount) VALUES(:id, :amount)",
           {"id": str(card_id) + "-" + condition, "amount": card_amount})
-    price_update.update_card(card_id, condition, card_amount)
 
 
 def update_card(card_id, card_amount, condition="NM", price=0, name=""):

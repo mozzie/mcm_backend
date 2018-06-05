@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from server.mcm import card_search
 from server.db import db
-
+from server.scripts import price_update
 
 class Card(Resource):
 
@@ -24,4 +24,6 @@ class Card(Resource):
                 db.update_card(card_id, new_amount, condition, card['name'])
         else:
             db.insert_card(card_id, amount, condition)
+            price_update.update_card(card_id, condition, amount)
+
 
