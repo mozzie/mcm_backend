@@ -21,7 +21,7 @@ class Card(Resource):
             if new_amount < 1:
                 db.delete_card(str(card_id) + "-" + condition)
             else:
-                db.update_card(card_id, new_amount, condition, card['name'])
+                db.update_card(card_id, new_amount, condition=condition, price=card['price'], name=card['name'])
         else:
             db.insert_card(card_id, amount, condition)
             price_update.update_card(card_id, condition, amount)
