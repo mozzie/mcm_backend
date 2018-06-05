@@ -40,6 +40,17 @@ def update_card(card_id, card_amount, condition="NM", price=0):
           {"id": str(card_id) + "-" + condition, "amount": card_amount, "price": price})
 
 
+def delete_card(card_id):
+    query("DELETE FROM CARDS WHERE card_id = :card_id", {card_id: card_id})
+
+
+def get_card(card_id, condition):
+    cards = fetch("SELECT * FROM CARDS WHERE card_id = :card_id", {card_id: str(card_id) + "-" + condition})
+    if cards and len(cards)>0:
+        return cards[0]
+    else:
+        return None
+
 def insert_price(card_id, condition, price):
     query("INSERT INTO prices(card_id, price) VALUES (:id, :price)",
           {"id": str(card_id) + "-" + condition, "price": price})
