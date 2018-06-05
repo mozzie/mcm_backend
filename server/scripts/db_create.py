@@ -4,7 +4,8 @@ from server.db.db import db_connect
 def main():
     c = db_connect().cursor()
     c.execute("CREATE TABLE IF NOT EXISTS cards("
-              "card_id TEXT PRIMARY KEY, name TEXT,"
+              "card_id TEXT PRIMARY KEY, "
+              "name TEXT,"
               "amount INTEGER, "
               "current_price INTEGER)")
 
