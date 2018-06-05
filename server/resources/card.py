@@ -17,7 +17,7 @@ class Card(Resource):
         condition = args['condition']
         card = db.get_card(card_id, condition)
         if card:
-            new_amount = int(card['amount']) - int(amount)
+            new_amount = int(card['amount']) + int(amount)
             if new_amount < 1:
                 db.delete_card(str(card_id) + "-" + condition)
             else:

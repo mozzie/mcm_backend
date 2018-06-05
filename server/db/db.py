@@ -41,7 +41,7 @@ def update_card(card_id, card_amount, condition="NM", price=0):
 
 
 def delete_card(card_id):
-    query("DELETE FROM CARDS WHERE card_id = :card_id", {card_id: card_id})
+    query("DELETE FROM CARDS WHERE card_id = :card_id", {"card_id": card_id})
 
 
 def get_card(card_id, condition):
