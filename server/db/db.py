@@ -1,6 +1,7 @@
 import sqlite3
 from os import path
 ROOT = path.dirname(path.realpath(__file__))
+import time
 
 
 def db_connect():
@@ -25,36 +26,33 @@ def fetch(query, parameters={}):
     return data
 
 
-def get_cards():
-    return fetch("SELECT * FROM CARDS")
+def get_cards(orderfield = "name", direction = "ASC"):
+    return fetch("SELECT * FROM CARDS ORDER BY :orderfield", {"orderfield": orderfield + " " + direction})
+
+def get_not_updated_cards():
+    timestamp = int(time.time()) - 60*60*24*7
+    return fetch("SELECT * FROM CARDS WHERE updated IS null OR updated < :time",  {"time": timestamp})
+
+def insert_card(card):
+    query("INSERT INTO cards(id, product_id, name, card_set, price, language, condition, foil, signed, playset, altered, mcm_comment, amount) VALUES(:id, :product_id, :name, :card_set, :price, :language, :condition, :foil, :signed, :playset, :altered, :mcm_comment, :amount)",
+          card)
 
 
-def insert_card(card_id, card_amount, condition="NM"):
-    query("INSERT INTO cards(card_id, amount) VALUES(:id, :amount)",
-          {"id": str(card_id) + "-" + condition, "amount": card_amount})
-
-
-def update_card(card_id, card_amount, condition="NM", price=0, name=""):
-    query("UPDATE CARDS SET amount = :amount, current_price=:price, name=:name WHERE card_id = :id",
-          {"id": str(card_id) + "-" + condition, "amount": card_amount, "price": price, "name": name})
+def update_card(card_id, trend_price):
+    query("UPDATE CARDS SET trend_price=:price, updated = :stamp WHERE id = :id",
+          {"id": card_id, "price": trend_price, "stamp": int(time.time())})
 
 
 def delete_card(card_id):
-    query("DELETE FROM CARDS WHERE card_id = :card_id", {"card_id": card_id})
+    query("DELETE FROM CARDS WHERE id = :card_id", {"card_id": card_id})
 
 
-def get_card(card_id, condition):
-    cards = fetch("SELECT * FROM CARDS WHERE card_id = :card_id", {"card_id": str(card_id) + "-" + condition})
+def get_card(card_id):
+    cards = fetch("SELECT * FROM CARDS WHERE id = :card_id", {"card_id": card_id})
     if cards and len(cards)>0:
         return cards[0]
     else:
         return None
-
-
-def insert_price(card_id, condition, price):
-    query("INSERT INTO prices(card_id, price) VALUES (:id, :price)",
-          {"id": str(card_id) + "-" + condition, "price": price})
-
 
 def to_dictionary(cursor, row):
     return {col[0]: row[index] for index, col in enumerate(cursor.description)}
