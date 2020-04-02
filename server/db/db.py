@@ -19,6 +19,7 @@ def query(query, parameters={}):
 def fetch(query, parameters={}):
     connection = db_connect()
     connection.row_factory = to_dictionary
+    connection.set_trace_callback(print)
     cur = connection.cursor()
     cur.execute(query, parameters)
     data = cur.fetchall()
@@ -29,7 +30,7 @@ def fetch(query, parameters={}):
 def get_cards(orderfield = "name", direction = "ASC"):
     if orderfield == 'trend_diff':
         orderfield = "(price - trend_price)"
-    return fetch("SELECT * FROM CARDS ORDER BY :orderfield", {"orderfield": orderfield + " " + direction})
+    return fetch("SELECT * FROM CARDS ORDER BY {}".format(orderfield + " " + direction))
 
 def get_not_updated_cards():
     timestamp = int(time.time()) - 60*60*24*7
