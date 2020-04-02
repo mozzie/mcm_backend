@@ -27,6 +27,9 @@ def fetch(query, parameters={}):
 
 
 def get_cards(orderfield = "name", direction = "ASC"):
+    if(orderfield === 'trend_diff') {
+        return fetch("SELECT * FROM CARDS ORDER BY (price - trend_price) :direction", {"direction" : direction})
+    }
     return fetch("SELECT * FROM CARDS ORDER BY :orderfield", {"orderfield": orderfield + " " + direction})
 
 def get_not_updated_cards():
