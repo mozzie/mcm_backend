@@ -13,10 +13,11 @@ def get_stock():
     next(reader, None)  # skip the headers
     cards = [row for row in reader]
     for card in cards:
+        print(card)
         card['price'] = int(float(card['price'])*100)
         card['language'] = "ENG" if card['language'] == '1' else "foreign"
         for i in ['amount','id','product_id']:
             card[i] = int(card[i])
         for b in ['foil','signed','playset','altered']:
-            card[b] = 1 if card[b] == '1' else 0
+            card[b] = 1 if card[b] == 'X' else 0
     return cards
