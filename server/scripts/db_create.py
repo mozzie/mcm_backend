@@ -6,10 +6,10 @@ def main():
     c.execute("CREATE TABLE IF NOT EXISTS cards("
               "id INTEGER PRIMARY KEY, "
               "product_id INTEGER,"
-              "name TEXT, "
-              "card_set TEXT, "
-              "language TEXT, "
-              "condition TEXT, "
+              "name VARCHAR(255), "
+              "card_set VARCHAR(10), "
+              "language VARCHAR(10), "
+              "condition VARCHAR(10), "
               "price INTEGER, "
               "foil INTEGER, "
               "signed INTEGER, "
@@ -19,7 +19,7 @@ def main():
               "trend_price INTEGER, "
               "edited_mcm INTEGER, "
               "amount INTEGER, "
-              "mcm_comment TEXT)")
+              "mcm_comment VARCHAR(255))")
 
 
 
