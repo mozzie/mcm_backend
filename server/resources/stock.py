@@ -12,7 +12,7 @@ class Stock(Resource):
 #        delete()
         orderfield = request.args.get('sort', default="name")
         sortorder = request.args.get('order', default="ASC")
-        if(orderfield not in ['name', 'price', 'trend_price', 'trend_diff']):
+        if(orderfield not in ['name', 'price', 'trend_price', 'trend_diff', 'mcm_comment']):
             orderfield = 'name'
         if(sortorder not in ['ASC', 'DESC']):
             sortorder = 'ASC'
