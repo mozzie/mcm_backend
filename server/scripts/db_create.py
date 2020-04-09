@@ -9,7 +9,7 @@ def main():
               "name VARCHAR(255), "
               "card_set VARCHAR(10), "
               "language VARCHAR(10), "
-              "condition VARCHAR(10), "
+              "cond VARCHAR(10), "
               "price INTEGER, "
               "foil INTEGER, "
               "signed INTEGER, "

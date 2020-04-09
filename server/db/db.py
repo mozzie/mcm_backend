@@ -41,7 +41,7 @@ def get_not_updated_cards():
     return fetch("SELECT * FROM CARDS WHERE updated IS null OR updated < :time",  {"time": timestamp})
 
 def insert_card(card):
-    query("INSERT INTO cards(id, product_id, name, card_set, price, language, condition, foil, signed, playset, altered, mcm_comment, amount) VALUES(:id, :product_id, :name, :card_set, :price, :language, :condition, :foil, :signed, :playset, :altered, :mcm_comment, :amount)",
+    query("INSERT INTO cards(id, product_id, name, card_set, price, language, cond, foil, signed, playset, altered, mcm_comment, amount) VALUES(:id, :product_id, :name, :card_set, :price, :language, :condition, :foil, :signed, :playset, :altered, :mcm_comment, :amount)",
           card)
 
 
@@ -51,7 +51,7 @@ def update_card(card_id, trend_price):
 
 def update_card_from_csv(card):
     card.update({"stamp":int(time.time())})
-    query("UPDATE CARDS SET language=:language,condition=:condition,foil=:foil,signed=:signed,playset=:playset,altered=:altered,mcm_comment=:mcm_comment, amount=:amount, price=:price, updated = :stamp WHERE id = :id",
+    query("UPDATE CARDS SET language=:language,cond=:condition,foil=:foil,signed=:signed,playset=:playset,altered=:altered,mcm_comment=:mcm_comment, amount=:amount, price=:price, updated = :stamp WHERE id = :id",
           card)
 
 

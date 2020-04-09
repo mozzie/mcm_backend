@@ -9,7 +9,7 @@ def get_stock():
     zip = base64.b64decode(data['stock'])
     csv_data = gzip.decompress(zip).decode("utf-8")
     reader = csv.DictReader(csv_data.splitlines(), delimiter=";")
-    reader.fieldnames = "id", "product_id", "name", "local_name", "card_set", "full_set", "price", "language", "condition", "foil", "signed", "playset","altered","mcm_comment","amount","onsale"
+    reader.fieldnames = "id", "product_id", "name", "local_name", "card_set", "full_set", "price", "language", "cond", "foil", "signed", "playset","altered","mcm_comment","amount","onsale"
     next(reader, None)  # skip the headers
     cards = [row for row in reader]
     for card in cards:
