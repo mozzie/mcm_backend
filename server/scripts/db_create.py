@@ -3,7 +3,7 @@ from server.db.db import db_connect
 
 def main():
     c = db_connect().cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS cards("
+    c.execute("CREATE TABLE IF NOT EXISTS CARDS("
               "id INTEGER PRIMARY KEY, "
               "product_id INTEGER,"
               "name VARCHAR(255), "
