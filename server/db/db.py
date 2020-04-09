@@ -1,11 +1,15 @@
-import sqlite3
+from mysql import connector
 from os import path
 ROOT = path.dirname(path.realpath(__file__))
 import time
 
 
 def db_connect():
-    con = sqlite3.connect(path.join(ROOT, "cards.db"))
+#    con = sqlite3.connect(path.join(ROOT, "cards.db"))
+    con = connector.connect(host='localhost',
+                            database='db',
+                            user='user',
+                            password='pass')
     return con
 
 

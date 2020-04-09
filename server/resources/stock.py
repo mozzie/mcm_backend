@@ -16,6 +16,5 @@ class Stock(Resource):
             orderfield = 'name'
         if(sortorder not in ['ASC', 'DESC']):
             sortorder = 'ASC'
-        db_create.main()
         #return stock_search.get()
         return db.get_cards(orderfield, sortorder)
