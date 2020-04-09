@@ -23,7 +23,6 @@ def query(query, parameters={}):
 def fetch(query, parameters={}):
     connection = db_connect()
     connection.row_factory = to_dictionary
-    connection.set_trace_callback(print)
     cur = connection.cursor()
     cur.execute(query, parameters)
     data = cur.fetchall()
