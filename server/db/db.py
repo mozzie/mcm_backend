@@ -45,6 +45,11 @@ def update_card(card_id, trend_price):
     query("UPDATE CARDS SET trend_price=:price, updated = :stamp WHERE id = :id",
           {"id": card_id, "price": trend_price, "stamp": int(time.time())})
 
+def update_card_from_csv(card):
+    card.update({"stamp":int(time.time())})
+    query("UPDATE CARDS SET language=:language,condition=:condition,foil=:foil,signed=:signed,playset=:playset,altered=:altered,mcm_comment=:mcm_comment, amount=:amount, price=:price, updated = :stamp WHERE id = :id",
+          card)
+
 
 def delete_card(card_id):
     query("DELETE FROM CARDS WHERE id = :card_id", {"card_id": card_id})

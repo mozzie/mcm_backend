@@ -13,13 +13,13 @@ class UpdateStock(Resource):
         cards = {card['id'] : card for card in db.get_cards()}
         for card in stock:
             if(card['id'] in cards):
+                db.update_card_from_csv(card)
                 del cards[card['id']]
             else:
                 db.insert_card(card)
         for card in cards:
             db.delete_card(card)
         not_updated_cards = db.get_not_updated_cards()
-        aht = []
         for card in not_updated_cards:
             product = product_search.get_product(card['product_id'])
             prices = product['product']['priceGuide']
