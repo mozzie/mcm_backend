@@ -3,9 +3,11 @@ from os import path
 ROOT = path.dirname(path.realpath(__file__))
 import time
 
-
+con = None
 def db_connect():
-#    con = sqlite3.connect(path.join(ROOT, "cards.db"))
+    global con
+    if con is not None and con.is_connected():
+        return con
     con = connector.connect(host='localhost',
                             database='db',
                             user='user',
