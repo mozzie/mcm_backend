@@ -19,11 +19,5 @@ class UpdateStock(Resource):
                 db.insert_card(card)
         for card in cards:
             db.delete_card(card)
-        not_updated_cards = db.get_not_updated_cards()
-        for card in not_updated_cards:
-            if card['price'] > 99:
-                product = product_search.get_product(card['product_id'])
-                prices = product['product']['priceGuide']
-                db.update_card(card['id'], 100*prices['TRENDFOIL'] if card['foil']==1 else 100*prices['TREND'])
+        db.close()
         return db.get_cards()
-        #return [card for card in db.get_cards()]

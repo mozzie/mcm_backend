@@ -19,14 +19,27 @@ def query(query, parameters={}):
     connection.commit()
     connection.close()
 
+def query_batch(query, parameters={}):
+    connection = db_connect()
+    connection.cursor().execute(query, parameters)
 
+def close():
+    connection.commit()
+    connection.close()
+    
 def fetch(query, parameters={}):
     connection = db_connect()
-    connection.row_factory = to_dictionary
-    cur = connection.cursor()
+    cur = connection.cursor(dictionary=True)
     cur.execute(query, parameters)
     data = cur.fetchall()
     connection.close()
+    return data
+
+def fetch_batch(query, parameters={}):
+    connection = db_connect()
+    cur = connection.cursor(dictionary=True)
+    cur.execute(query, parameters)
+    data = cur.fetchall()
     return data
 
 
@@ -37,25 +50,23 @@ def get_cards(orderfield = "name", direction = "ASC"):
 
 def get_not_updated_cards():
     timestamp = int(time.time()) - 60*60*24*7
-    return fetch("SELECT * FROM CARDS WHERE updated IS null OR updated < %(time)s",  {"time": timestamp})
+    return fetch("SELECT * FROM CARDS WHERE updated IS null OR updated < %(time)s limit 100",  {"time": timestamp})
 
 def insert_card(card):
-    query("INSERT INTO CARDS(id, product_id, name, card_set, price, language, cond, foil, signed, playset, altered, mcm_comment, amount) VALUES(%(id)s, %(product_id)s, %(name)s, %(card_set)s, %(price)s, %(language)s, %(condition)s, %(foil)s, %(signed)s, %(playset)s, %(altered)s, %(mcm_comment)s, %(amount)s)",
+    query_batch("INSERT INTO CARDS(id, product_id, name, card_set, price, language, cond, foil, signed, playset, altered, mcm_comment, amount) VALUES(%(id)s, %(product_id)s, %(name)s, %(card_set)s, %(price)s, %(language)s, %(cond)s, %(foil)s, %(signed)s, %(playset)s, %(altered)s, %(mcm_comment)s, %(amount)s)",
           card)
 
 
 def update_card(card_id, trend_price):
-    query("UPDATE CARDS SET trend_price=:price, updated = %(stamp)s WHERE id = %(id)s",
+    query("UPDATE CARDS SET trend_price=%(price)s, updated = %(stamp)s WHERE id = %(id)s",
           {"id": card_id, "price": trend_price, "stamp": int(time.time())})
 
 def update_card_from_csv(card):
-    card.update({"stamp":int(time.time())})
-    query("UPDATE CARDS SET language=%(language)s,cond=%(condition)s,foil=%(foil)s,signed=%(signed)s,playset=%(playset)s,altered=%(altered)s,mcm_comment=%(mcm_comment)s, amount=%(amount)s, price=%(price)s, updated = %(stamp)s WHERE id = %(id)s",
-          card)
+    query_batch("UPDATE CARDS SET language=%(language)s,cond=%(cond)s,foil=%(foil)s,signed=%(signed)s,playset=%(playset)s,altered=%(altered)s,mcm_comment=%(mcm_comment)s, amount=%(amount)s, price=%(price)s WHERE id = %(id)s", card)
 
 
 def delete_card(card_id):
-    query("DELETE FROM CARDS WHERE id = %(card_id)s", {"card_id": card_id})
+    query_batch("DELETE FROM CARDS WHERE id = %(card_id)s", {"card_id": card_id})
 
 
 def get_card(card_id):
@@ -64,6 +75,3 @@ def get_card(card_id):
         return cards[0]
     else:
         return None
-
-def to_dictionary(cursor, row):
-    return {col[0]: row[index] for index, col in enumerate(cursor.description)}
