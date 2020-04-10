@@ -6,7 +6,7 @@ import csv
 def get_stock():
     url = "stock/file"
     data = mcm_api.request(url, "")
-    zip = base64.b64decode(data['stock'])
+    zip = base64.b64decode(data['data']['stock'])
     csv_data = gzip.decompress(zip).decode("utf-8")
     reader = csv.DictReader(csv_data.splitlines(), delimiter=";")
     reader.fieldnames = "id", "product_id", "name", "local_name", "card_set", "full_set", "price", "language", "cond", "foil", "signed", "playset","altered","mcm_comment","amount","onsale"
@@ -19,4 +19,4 @@ def get_stock():
             card[i] = int(card[i])
         for b in ['foil','signed','playset','altered']:
             card[b] = 1 if card[b] == 'X' else 0
-    return cards
+    return {'data':cards, "limit": data['limit']}
