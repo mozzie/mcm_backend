@@ -30,4 +30,5 @@ def request(base_url, parameters=""):
                          resource_owner_secret=access_token_secret,
                          realm=full_url)
     r = auth.get(full_url + parameters)
+    print(r)
     return json.loads(r.content.decode("utf-8"))

@@ -13,5 +13,8 @@ class UpdateTrends(Resource):
         for card in not_updated_cards:
             product = product_search.get_product(card['product_id'])
             prices = product['product']['priceGuide']
-            db.update_card(card['id'], 100*prices['TRENDFOIL'] if card['foil']==1 else 100*prices['TREND'])
+            price = 100*prices['TRENDFOIL'] if card['foil'] == 1 else 100 * prices['TREND']
+            if product['playset'] == 1:
+                price = price * 4
+            db.update_card(card['id'], price)
         return db.get_cards()

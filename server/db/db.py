@@ -24,9 +24,10 @@ def query_batch(query, parameters={}):
     connection.cursor().execute(query, parameters)
 
 def close():
+    connection = db_connect()
     connection.commit()
     connection.close()
-    
+
 def fetch(query, parameters={}):
     connection = db_connect()
     cur = connection.cursor(dictionary=True)
