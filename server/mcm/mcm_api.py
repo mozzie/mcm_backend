@@ -2,6 +2,7 @@ from requests_oauthlib import OAuth1Session
 import json
 import configparser
 import os
+from pprint import pprint
 
 configParser = configparser.RawConfigParser()
 configFilePath = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini')

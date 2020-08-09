@@ -9,9 +9,9 @@ def db_connect():
     if con is not None and con.is_connected():
         return con
     con = connector.connect(host='localhost',
-                            database='db',
-                            user='user',
-                            password='pass')
+                            database='rainbow',
+                            user='rainbow',
+                            password='challenge')
     return con
 
 
