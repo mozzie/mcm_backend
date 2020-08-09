@@ -31,6 +31,11 @@ def request(base_url, parameters=""):
                          resource_owner_secret=access_token_secret,
                          realm=full_url)
     r = auth.get(full_url + parameters)
-    data = json.loads(r.content.decode("utf-8"))
+    data = {}
+    try:
+        data = json.loads(r.content.decode("utf-8"))
+    except:
+        data = {"error": "failed", "order":[]}
+
     requests_left = int(r.headers.get('x-request-limit-max')) - int(r.headers.get('x-request-limit-count'))
     return {"data": data, "limit": requests_left}

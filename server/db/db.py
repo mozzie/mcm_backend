@@ -78,3 +78,18 @@ def get_card(card_id):
         return cards[0]
     else:
         return None
+
+
+def insert_sold(sold):
+    query_batch("INSERT INTO SOLD(id, product_id, name, card_set, price, language, cond, foil, signed, playset, altered, mcm_comment, amount) VALUES(%(id)s, %(product_id)s, %(name)s, %(card_set)s, %(price)s, %(language)s, %(cond)s, %(foil)s, %(signed)s, %(playset)s, %(altered)s, %(mcm_comment)s, %(amount)s)",
+          sold)
+
+def get_sold(card_id):
+    cards = fetch_batch("SELECT * FROM SOLD WHERE id = %(card_id)s", {"card_id": card_id})
+    if cards and len(cards)>0:
+        return cards[0]
+    else:
+        return None
+
+def get_all_sold(orderfield = "name", direction = "ASC"):
+    return fetch("SELECT * FROM SOLD ORDER BY {}".format(orderfield + " " + direction))
