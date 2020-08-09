@@ -21,7 +21,22 @@ def main():
               "amount INTEGER, "
               "mcm_comment VARCHAR(255))")
 
-
+    c.execute("CREATE TABLE IF NOT EXISTS SOLD("
+              "id INTEGER PRIMARY KEY, "
+              "product_id INTEGER,"
+              "name VARCHAR(255), "
+              "card_set VARCHAR(30), "
+              "language VARCHAR(10), "
+              "cond VARCHAR(10), "
+              "price INTEGER, "
+              "foil INTEGER, "
+              "signed INTEGER, "
+              "playset INTEGER, "
+              "altered INTEGER, "
+              "amount INTEGER, "
+              "mcm_comment VARCHAR(255))")
+    db_connect().commit()
+    db_connect().close()
 
 def delete():
     c = db_connect().cursor()

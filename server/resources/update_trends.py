@@ -15,7 +15,7 @@ class UpdateTrends(Resource):
             limit = product['limit']
             prices = product['data']['product']['priceGuide']
             price = 100*prices['TRENDFOIL'] if card['foil'] == 1 else 100 * prices['TREND']
-            if product['playset'] == 1:
+            if card['playset'] == 1:
                 price = price * 4
             db.update_card(card['id'], price)
         return {"data": db.get_cards(), "limit": limit}
