@@ -9,4 +9,10 @@ import json
 class SoldItems(Resource):
 
     def get(self):
-        return db.get_all_sold()
+        orderfield = request.args.get('sort', default="name")
+        sortorder = request.args.get('order', default="ASC")
+        if(orderfield not in ['name', 'price', 'mcm_comment']):
+            orderfield = 'name'
+        if(sortorder not in ['ASC', 'DESC']):
+            sortorder = 'ASC'
+        return db.get_all_sold(orderfield, sortorder)

@@ -35,7 +35,7 @@ class UpdateSold(Resource):
             "card_set": obj['product'].get('expansion', "n/a"),
             "language": obj['language']['languageName'],
             "cond": obj.get('condition', "n/a"),
-            "price": obj['price'],
+            "price": (obj['price']*100),
             "foil": obj.get('isFoil', 0),
             "signed": obj.get('isSigned', 0),
             "playset": obj.get('isPlayset', 0),
