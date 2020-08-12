@@ -16,13 +16,11 @@ class UpdateSold(Resource):
             for order in orders:
                 for article in order['article']:
                     item = self.get_card(article)
-                    print(item)
                     if db.get_sold(item['id']) is None:
                         db.insert_sold(item)
                     else:
                         db.close()
-                        return db.get_sold()
-            print(len(orders))
+                        return db.get_all_sold()
             if len(orders) < 100:
                 db.close()
                 return db.get_all_sold()
