@@ -19,7 +19,7 @@ def main():
               "edited_mcm INTEGER, "
               "amount INTEGER, "
               "mcm_comment VARCHAR(255), "
-  	      "KEY `card_name` (`name`), "
+  	          "KEY `card_name` (`name`), "
               "KEY `card_price` (`price`), "
               "KEY `card_trend` (`trend_price`), "
               "KEY `card_comment` (`mcm_comment`))")
@@ -37,10 +37,12 @@ def main():
               "playset INTEGER, "
               "altered INTEGER, "
               "amount INTEGER, "
+              "timestamp DATETIME, "
               "mcm_comment VARCHAR(255), "
-  	      "KEY `card_name` (`name`), "
-              "KEY `card_price` (`price`), "
-              "KEY `card_comment` (`mcm_comment`))")
+  	          "KEY `sold_name` (`name`), "
+              "KEY `sold_price` (`price`), "
+              "KEY `sold_stamp` (`timestamp`), "
+              "KEY `sold_comment` (`mcm_comment`))")
 
     db_connect().commit()
     db_connect().close()

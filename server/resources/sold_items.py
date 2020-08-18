@@ -11,7 +11,7 @@ class SoldItems(Resource):
     def get(self):
         orderfield = request.args.get('sort', default="name")
         sortorder = request.args.get('order', default="ASC")
-        if(orderfield not in ['name', 'price', 'mcm_comment']):
+        if(orderfield not in ['name', 'price', 'mcm_comment', 'timestamp']):
             orderfield = 'name'
         if(sortorder not in ['ASC', 'DESC']):
             sortorder = 'ASC'

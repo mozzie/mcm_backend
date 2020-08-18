@@ -14,8 +14,10 @@ class UpdateSold(Resource):
             stock = sold_search.get_sold(start)
             orders = stock['data']['data']['order']
             for order in orders:
+                print(order)
                 for article in order['article']:
                     item = self.get_card(article)
+                    item['timestamp'] = order['state']['dateBought']
                     if db.get_sold(item['id']) is None:
                         db.insert_sold(item)
                     else:
@@ -39,5 +41,5 @@ class UpdateSold(Resource):
             "playset": obj.get('isPlayset', 0),
             "altered": obj.get('isAltered', 0),
             "amount": obj['count'],
-            "mcm_comment": obj['comments']
+            "mcm_comment": obj['comments'],
         }

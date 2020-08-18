@@ -9,11 +9,11 @@ def db_connect():
     if con is not None and con.is_connected():
         return con
     con = connector.connect(host='localhost',
-                            database='rainbow',
-                            user='rainbow',
-                            password='challenge')
+                            database='db',
+                            user='username',
+                            password='passwd')
     return con
-
+# TODO store DB credentials in config files
 
 def query(query, parameters={}):
     connection = db_connect()
@@ -81,15 +81,20 @@ def get_card(card_id):
 
 
 def insert_sold(sold):
-    query_batch("INSERT INTO SOLD(id, product_id, name, card_set, price, language, cond, foil, signed, playset, altered, mcm_comment, amount) VALUES(%(id)s, %(product_id)s, %(name)s, %(card_set)s, %(price)s, %(language)s, %(cond)s, %(foil)s, %(signed)s, %(playset)s, %(altered)s, %(mcm_comment)s, %(amount)s)",
+    query_batch("INSERT INTO SOLD(id, product_id, name, card_set, price, language, cond, foil, signed, playset, altered, mcm_comment, amount, timestamp) VALUES(%(id)s, %(product_id)s, %(name)s, %(card_set)s, %(price)s, %(language)s, %(cond)s, %(foil)s, %(signed)s, %(playset)s, %(altered)s, %(mcm_comment)s, %(amount)s, %(timestamp)s)",
           sold)
 
 def get_sold(card_id):
     cards = fetch_batch("SELECT * FROM SOLD WHERE id = %(card_id)s", {"card_id": card_id})
     if cards and len(cards)>0:
+        for sold in cards:
+            sold['timestamp'] = str(sold['timestamp'])
         return cards[0]
     else:
         return None
 
 def get_all_sold(orderfield = "name", direction = "ASC"):
-    return fetch("SELECT * FROM SOLD ORDER BY {}".format(orderfield + " " + direction))
+    cards = fetch("SELECT * FROM SOLD ORDER BY {}".format(orderfield + " " + direction))
+    for sold in cards:
+        sold['timestamp'] = str(sold['timestamp'])
+    return cards
