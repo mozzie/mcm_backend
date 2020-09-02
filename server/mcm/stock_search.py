@@ -8,8 +8,9 @@ def get_stock():
     data = mcm_api.request(url, "")
     zip = base64.b64decode(data['data']['stock'])
     csv_data = gzip.decompress(zip).decode("utf-8")
+    print(csv_data)
     reader = csv.DictReader(csv_data.splitlines(), delimiter=";")
-    reader.fieldnames = "id", "product_id", "name", "local_name", "card_set", "full_set", "price", "language", "cond", "foil", "signed", "playset","altered","mcm_comment","amount","onsale"
+    reader.fieldnames = "id", "product_id", "name", "local_name", "card_set", "full_set", "price", "language", "cond", "foil", "signed", "playset","altered","mcm_comment","amount","onsale","currency_id","currency"
     next(reader, None)  # skip the headers
     cards = [row for row in reader]
     for card in cards:
